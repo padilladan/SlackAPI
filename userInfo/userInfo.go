@@ -34,8 +34,8 @@ func main() {
 	////////////////////////////////////////////////////////////////////////
 
 
-	// Open a direct message//////////////////////////////////////////////////////
-	url := "https://slack.com/api/users.info"
+	// Get User information//////////////////////////////////////////////////////
+	url := "https://slack.com/api/users.info?user=" + selectedID
 	method := "GET"
 
 	payload := strings.NewReader("")
@@ -48,24 +48,14 @@ func main() {
 		fmt.Println(err)
 	}
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
-	req.Header.Add("User", selectedID)
-	req.Header.Add("Authorization", "Bearer " + apiKey)
+	req.Header.Add("Authorization", "Bearer "+apiKey)
 
 	res, err := client.Do(req)
 	defer res.Body.Close()
 	body, err := ioutil.ReadAll(res.Body)
-
 	/////////////////////////////////////////////////////////////////////////////////
 
 
 
-
-
-	// Send a direct message/////////////////////////////////////////////
-
-	/////////////////////////////////////////////////////////////////////
-
-
-
-	fmt.Println(body)
+	fmt.Println(string(body))
 }
