@@ -129,34 +129,33 @@ func main() {
 	method2 := "POST"
 
 	payload2 := &bytes.Buffer{}
-	writer2 := multipart.NewWriter(payload)
+	writer2 := multipart.NewWriter(payload2)
 	_ = writer2.WriteField("channel", channelID)
 	_ = writer2.WriteField("text", selectedtext)
-	err = writer2.Close()
-	if err != nil {
-		fmt.Println(err)
+	err2 := writer2.Close()
+	if err2 != nil {
+		fmt.Println(err2)
 	}
 
 
 	client2 := &http.Client {
 	}
-	req2, err2 := http.NewRequest(method2, url2, payload2)
+	req2, err := http.NewRequest(method2, url2, payload2)
 
-	if err2 != nil {
+	if err != nil {
 		fmt.Println(err)
 	}
 	req2.Header.Add("Content-Type", "application/json")
 	req2.Header.Add("Authorization", "Bearer " + apiKey)
 
-	req2.Header.Set("Content-Type", writer.FormDataContentType())
-	res2, err := client2.Do(req)
+	req2.Header.Set("Content-Type", writer2.FormDataContentType())
+	res2, err := client2.Do(req2)
 	defer res.Body.Close()
-	body2, err := ioutil.ReadAll(res2.Body)
+	_, err = ioutil.ReadAll(res2.Body)
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
 
-	//fmt.Println(string(body))
-	fmt.Println(string(body2))
+	fmt.Println("Message sent!")
 }
